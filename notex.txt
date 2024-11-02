@@ -1,0 +1,46 @@
+chapter 88 - Exception : throw
+
+
+By adding one or more throw statements, you can define your own errors in a try...catch
+pair. This can be useful for dealing with wayward user behavior.
+Suppose you've asked the user to create a password. It must be at least 8 to 12 characters
+long, must contain at least one number, and can't contain any spaces. This is the markup that
+creates the form, simplified to keep you focused on the essentials:
+<form onSubmit="return checkPassword();">
+Enter a password<br>
+(8-12 characters, at least 1 number, no spaces)<br>
+<input type="text" id="f1">
+<input type="submit" value="Submit">
+</form>
+This is the function that tests whether the user's input has met the requirements. If not, the
+function displays an alert.
+1 function checkPassword() {
+2 try {
+3 var pass = document.getElementById("f1").value;
+4 if (pass.length < 8) {
+5 throw "Please enter at least 8 characters.";
+6 }
+7 if (pass.indexOf(" ") !== -1) {
+8 throw "No spaces in the password, please.";
+9 }
+10 var numberSomewhere = false;
+11 for (var i = 0; i < pass.length; i++) {
+12 if (isNaN(pass(i, i+1)) === false) {
+13 numberSomewhere = true;
+14 break;
+15 }
+16 }
+17 if (numberSomewhere === false) {
+18 throw "Include at least 1 number.";
+19 }
+20 }
+21 catch(err) {
+22 alert(err);
+23 }
+24 }
+Lines 4 through 9 and 17 through 19 test for three different user errors, with a customized
+string thrown for each error. The catch code, instead of catching a JavaScript-generated error,
+catches the string sent by throw. This is the value that is assigned to the variable err in line 21
+and serves as the display message in line 22.
+Note that any type of value, including a number or Boolean, can be passed to the catch
+parameter via throw. You can also pass a variable.
